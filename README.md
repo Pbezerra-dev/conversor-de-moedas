@@ -1,4 +1,6 @@
-# conversor
+![Vue](https://img.shields.io/badge/vue-3.0.0-green.svg)
+
+># Conversor de moedas em Vue
 
 ## Project setup
 ```
