@@ -2,6 +2,12 @@
 
 ># Conversor de moedas em Vue
 
+### Definindo sua chave de acesso a api
+```
+cp contrib/env-sample .env.local
+```
+[Como obter sua chave de acesso](https://free.currencyconverterapi.com/free-api-key)
+
 ## Project setup
 ```
 npm install
@@ -21,6 +27,5 @@ npm run build
 ```
 npm run lint
 ```
-
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
