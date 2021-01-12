@@ -2,37 +2,52 @@
   <div class="conversor">
     <h2>{{ moedaA }} Para {{ moedaB }}</h2>
     <input type="text" v-model="moedaAValue" v-bind:placeholder="moedaA" />
-    <input id="converter-btn" type="button" value="Converter" v-on:click="converter" />
+    <input
+      id="converter-btn"
+      type="button"
+      value="Converter"
+      v-on:click="converter"
+    />
     <h2>{{ moedaBValue }}</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Conversor",
-  props: ["moedaA", "moedaB"],
-    data() {
-      return {
-        moedaAValue: "",
-        moedaBValue: 0
-      };
-    },
+  name: 'Conversor',
+  props: ['moedaA', 'moedaB'],
+  data() {
+    return {
+      moedaAValue: '',
+      moedaBValue: 0,
+    };
+  },
   methods: {
     converter() {
-      let dePara = `${this.moedaA}_${this.moedaB}`
-      let url = `https://free.currconv.com/api/v7/convert?q=${dePara}&compact=ultra&apiKey=${process.env.VUE_APP_API_KEY}`
+      let dePara = `${this.moedaA}_${this.moedaB}`;
+      let url = `https://free.currconv.com/api/v7/convert?q=${dePara}&compact=ultra&apiKey=${process.env.VUE_APP_API_KEY}`;
 
-      fetch(url).then(resp => { return resp.json() }).then(json => {
-        let localeFormat = {"BRL": "pt-br", "USD": "en", "CAD": "en", "EUR": "en"}
-        
-        if ( this.moedaAValue ) {
-          this.moedaBValue = (json[dePara] * parseFloat(this.moedaAValue))
-          .toLocaleString(`${localeFormat[this.moedaB]}`, { style: "currency", currency: `${this.moedaB}`})
-        } else { alert("Digite um valor :)") }
-      })
-    }
-  }
-}
+      fetch(url)
+        .then((resp) => {
+          return resp.json();
+        })
+        .then((json) => {
+          const locales = this.moedaB === 'BRL' ? 'pt-br' : 'en';
+          const calc = () =>
+            json[dePara] * parseFloat(this.moedaAValue.replace(",", "."));
+
+          if (this.moedaAValue) {
+            this.moedaBValue = calc().toLocaleString(locales, {
+              style: "currency",
+              currency: this.moedaB,
+            });
+          } else {
+            alert("Digite um valor :)");
+          }
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
